@@ -20,9 +20,8 @@ public class BackwardArrayIt implements Iterator<Integer> {
     public Integer next() {
         if (!hasNext()) {
            throw new NoSuchElementException();
-        } else {
-            point++;
         }
+        point++;
         return  data[data.length - point];
     }
 }
