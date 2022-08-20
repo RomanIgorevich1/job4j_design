@@ -11,24 +11,22 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     private static class Node<E> {
         E item;
         Node<E> next;
-        Node<E> prev;
 
-        Node(Node<E> prev, E element, Node<E> next) {
-            this.item = element;
+        Node(E item, Node<E> next) {
+            this.item = item;
             this.next = next;
-            this.prev = prev;
         }
     }
 
     @Override
     public void add(E value) {
-        Node<E> l = last;
-        Node<E> newNode = new Node<>(l, value, null);
-        last = newNode;
-        if (l == null) {
-            first = newNode;
+        Node<E> current = last;
+        Node<E> element = new Node<>(value, null);
+        last = element;
+        if (current == null) {
+            first = element;
         } else {
-            l.next = newNode;
+            current.next = element;
         }
         size++;
         modCount++;
@@ -42,21 +40,21 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
         for (int i = 0; i < index; i++) {
             newElement = newElement.next;
             element = newElement.item;
-            }
+        }
         return element;
     }
 
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
-            private int  expectedModCount = modCount;
-            private int point = 0;
+            private int expectedModCount = modCount;
+            Node<E> newElement = first;
             @Override
             public boolean hasNext() {
                 if (expectedModCount != modCount) {
                     throw new ConcurrentModificationException();
                 }
-                return point < size;
+                return newElement != null;
             }
 
             @Override
@@ -64,7 +62,9 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return get(point++);
+                E element = newElement.item;
+                newElement = newElement.next;
+                return element;
             }
         };
     }
