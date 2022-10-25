@@ -51,22 +51,27 @@ public class ForwardLinked<T> implements Iterable<T> {
         return element;
     }
 
+    /**
+     * Создаем три переменные предыдущий, текущий, следующий, в цикле проверяем пока элемент не будет равен null,
+     * Следующему элементу мы присваиваем значение текущему следующему (newElement = element.next),
+     * следующему текущему присваиваем значение предыдущего (element.next = oldElement), значению предыдущего
+     * присваиваем значение текущего (oldElement = element), значению текущего присваиваем значение следующего
+     * (element = newElement) и голова теперь значение предыдущего (head = oldElement)
+     * @return результат
+     */
     public boolean revert() {
-        boolean result = true;
-        if (size <= 1) {
-            result = false;
-        } else {
-            Node<T> oldElement = null;
-            Node<T> element = head;
-            Node<T> newElement;
-            while (element != null) {
-                newElement = element.next;
-                element.next = oldElement;
-                oldElement = element;
-                element = newElement;
-                head = oldElement;
-            }
-        }
+        boolean result = size > 1;
+         if (result) {
+             Node<T> oldElement = null;
+             Node<T> element = head;
+             while (element != null) {
+                 Node<T> newElement = element.next;
+                 element.next = oldElement;
+                 oldElement = element;
+                 element = newElement;
+                 head = oldElement;
+             }
+         }
         return result;
     }
 
