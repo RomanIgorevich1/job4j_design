@@ -5,21 +5,13 @@ import java.util.function.Predicate;
 public class ListUtils {
     public static <T> void addBefore(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> iterator = list.listIterator();
-        do {
-            iterator.next();
-        }
-        while (iterator.nextIndex() != index);
+        ListIterator<T> iterator = list.listIterator(index);
         iterator.add(value);
     }
 
     public static <T> void addAfter(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> iterator = list.listIterator();
-        do {
-            iterator.next();
-        }
-        while (iterator.previousIndex() != index);
+        ListIterator<T> iterator = list.listIterator(index + 1);
         iterator.add(value);
     }
 
@@ -44,12 +36,6 @@ public class ListUtils {
     }
 
     public static <T> void removeAll(List<T> list, List<T> elements) {
-        ListIterator<T> iterator = list.listIterator();
-        while (iterator.hasNext()) {
-            T value = iterator.next();
-            if (elements.contains(value)) {
-                iterator.remove();
-            }
-        }
+        removeIf(list, elements::contains);
     }
 }
