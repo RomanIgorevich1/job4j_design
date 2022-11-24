@@ -25,18 +25,12 @@ public class SimpleTree<E> implements Tree<E> {
 
     @Override
     public Optional<Node<E>> findBy(E value) {
-        Predicate<Node<E>> predicate = (find) -> find.value.equals(value);
-        return findByPredicate(predicate);
+        return findByPredicate((find) -> find.value.equals(value));
     }
 
     @Override
     public boolean isBinary() {
-        boolean result = false;
-        Predicate<Node<E>> predicate = (value) -> value.children.size() > 2;
-        if (findByPredicate(predicate).isEmpty()) {
-            result = true;
-        }
-        return result;
+        return findByPredicate((value) -> value.children.size() > 2).isEmpty();
     }
 
     private Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
