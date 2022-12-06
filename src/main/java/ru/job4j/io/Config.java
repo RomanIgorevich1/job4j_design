@@ -25,9 +25,13 @@ public class Config {
             String text;
             while ((text = reader.readLine()) != null) {
                 String[] newText = text.split("=", 2);
-                if (!text.contains("#")
-                        && (!newText[0].isEmpty() && !newText[1].isEmpty())) {
+                if (text.contains("#")) {
+                    continue;
+                }
+                if (!newText[0].isEmpty() && !newText[1].isEmpty()) {
                     value.put(newText[0].trim(), newText[1].trim());
+                } else {
+                    throw new IllegalArgumentException();
                 }
             }
         } catch (IOException exception) {

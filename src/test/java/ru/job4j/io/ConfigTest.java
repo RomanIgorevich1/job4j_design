@@ -14,5 +14,20 @@ class ConfigTest {
         assertThat(config.value("name")).isEqualTo("Roman");
         assertThat(config.value("name2")).isEqualTo("Petr");
         assertThat(config.value("name6")).isEqualTo("Polina=");
+        assertThat(config.value("name7")).isEqualTo("Viktor=1");
+    }
+
+    @Test
+    void whenKeyException() {
+        String path = "./data/key_exceptions.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void whenValueException() {
+        String path = "./data/value_exceptions.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
     }
 }
