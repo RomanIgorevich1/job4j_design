@@ -24,6 +24,6 @@ class AnalysisTest {
         try (BufferedReader reader = new BufferedReader(new FileReader(target))) {
             reader.lines().map(value -> value + " ").forEach(result::append);
         }
-        assertThat("10:57:01 10:59:01 11:01:02 11:02:02 ").isEqualTo(result.toString());
+        assertThat("10:57:01;10:59:01 11:01:02;11:02:02 ").isEqualTo(result.toString());
     }
 }
