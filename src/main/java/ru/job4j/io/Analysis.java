@@ -10,13 +10,13 @@ public class Analysis {
             boolean result = true;
             while ((text = reader.readLine()) != null) {
                 String[] newText = text.split(" ");
-                if ((newText[0].equals("400") || newText[0].contains("500")) && result) {
+                if ((newText[0].contains("400") || newText[0].contains("500")) && result) {
                     result = false;
-                    writer.printf("%s%n", newText[1]);
+                    writer.printf(newText[1] + ";");
                 }
                 if ((newText[0].contains("200") || newText[0].contains("300")) && !result) {
                     result = true;
-                    writer.printf("%s%n", newText[1]);
+                    writer.printf(newText[1] + "\n");
                 }
             }
         } catch (IOException exception) {
