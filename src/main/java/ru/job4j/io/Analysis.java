@@ -12,11 +12,11 @@ public class Analysis {
                 String[] newText = text.split(" ");
                 if ((newText[0].contains("400") || newText[0].contains("500")) && result) {
                     result = false;
-                    writer.printf(newText[1] + ";");
+                    writer.printf("%s;", newText[1]);
                 }
                 if ((newText[0].contains("200") || newText[0].contains("300")) && !result) {
                     result = true;
-                    writer.printf(newText[1] + "\n");
+                    writer.printf("%s%n", newText[1]);
                 }
             }
         } catch (IOException exception) {
