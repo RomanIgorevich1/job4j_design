@@ -1,6 +1,5 @@
 package ru.job4j.io;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.List;
@@ -21,8 +20,8 @@ public class Search extends SimpleFileVisitor<Path> {
     }
 
     public void validation(String[] args) {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER.");
+        if ((args.length == 0) || args[0] != null && args[1] != null) {
+            throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER. Or args == null.");
         }
     }
 }
