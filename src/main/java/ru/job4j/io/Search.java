@@ -20,8 +20,8 @@ public class Search extends SimpleFileVisitor<Path> {
     }
 
     public void validation(String[] args) {
-        if ((args.length == 0) || (args[0] == null || args[1] == null)) {
-            throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER. Or args == null.");
+        if (args.length != 2  || (!args[0].equals("C:") || !args[1].equals(".properties"))) {
+            throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER. Or wrong argument");
         }
     }
 }
