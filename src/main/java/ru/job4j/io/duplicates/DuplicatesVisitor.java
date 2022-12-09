@@ -10,19 +10,20 @@ import java.util.*;
 import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class DuplicatesVisitor  extends SimpleFileVisitor<Path> {
-    private Set<FileProperty> path = new HashSet<>();
-    private List<Path> list = new ArrayList<>();
+    private Map<FileProperty, Path> filePropertyMap = new HashMap<>();
+    private List<Path> listDuplicates = new ArrayList<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty newFile = new FileProperty(file.toFile().length(), file.getFileName().toString());
-        if (!path.contains(newFile)) {
-            list.add(file.toAbsolutePath());
+        if (filePropertyMap.containsKey(newFile)) {
+            listDuplicates.add(file.toAbsolutePath());
         }
+        filePropertyMap.put(newFile, file.toAbsolutePath());
         return CONTINUE;
     }
 
     public void find() {
-        list.forEach(name -> System.out.println(name.toAbsolutePath()));
+        listDuplicates.forEach(name -> System.out.println(name.toAbsolutePath()));
     }
 }
