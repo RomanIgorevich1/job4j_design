@@ -4,19 +4,19 @@ import java.util.Objects;
 
 public class FileProperty {
 
-    private int size;
+    private long size;
     private String name;
 
-    public FileProperty(int size, String name) {
+    public FileProperty(long size, String name) {
         this.size = size;
         this.name = name;
     }
 
-    public int getSize() {
+    public long getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(long size) {
         this.size = size;
     }
 
