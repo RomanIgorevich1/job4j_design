@@ -21,10 +21,10 @@ public class Search extends SimpleFileVisitor<Path> {
     }
 
     public void validation(String[] args) {
-        File path = new File(args[0]);
         if (args.length != 2) {
             throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER.");
         }
+        File path = new File(args[0]);
         if (args[0].length() < 1) {
             throw new IllegalArgumentException("Parameter length must be greater than 1.");
         }
