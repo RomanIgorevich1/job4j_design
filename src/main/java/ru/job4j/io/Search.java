@@ -22,14 +22,17 @@ public class Search extends SimpleFileVisitor<Path> {
 
     public void validation(String[] args) {
         File path = new File(args[0]);
-        if (!path.exists()) {
-            throw new IllegalArgumentException("This path does not exist");
-        }
-        if (!args[1].startsWith(".")) {
-            throw new IllegalArgumentException("Extension must start with a dot");
-        }
         if (args.length != 2) {
             throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER.");
+        }
+        if (args[0].length() < 1) {
+            throw new IllegalArgumentException("Parameter length must be greater than 1.");
+        }
+        if (!path.exists() && !path.isDirectory()) {
+            throw new IllegalArgumentException("This path does not exist.");
+        }
+        if (!args[1].startsWith(".")) {
+            throw new IllegalArgumentException("Extension must start with a dot.");
         }
     }
 }
