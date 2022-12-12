@@ -15,19 +15,12 @@ public class ArgsName {
 
     private void parse(String[] args) {
         validation(args);
-        StringBuilder builder = new StringBuilder();
-        String[] newArgs;
         for (String str : args) {
-           newArgs = str.split("=", 2);
+            String[]  newArgs = str.split("=", 2);
            for (String str2 : newArgs) {
-               if (str2.startsWith("-")) {
-                   builder.append(str2);
-                   builder.deleteCharAt(0);
-                   value.put(builder.toString(), newArgs[1]);
-                   builder.delete(0, str2.length());
-                   break;
-               }
-               value.put(newArgs[0], newArgs[1]);
+               String[] array = str2.split("-");
+               value.put(array[1], newArgs[1]);
+               break;
            }
         }
     }
