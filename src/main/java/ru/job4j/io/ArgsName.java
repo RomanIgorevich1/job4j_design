@@ -8,42 +8,40 @@ public class ArgsName {
 
     public String get(String key) {
         if (!value.containsKey(key)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Данного ключа не существует.");
         }
         return value.get(key);
     }
 
     private void parse(String[] args) {
-        validation(args);
+        if (args.length < 1) {
+            throw new IllegalArgumentException("Список аргументов пуст.");
+        }
         for (String str : args) {
+            validation(str);
             String[]  newArgs = str.split("=", 2);
            for (String str2 : newArgs) {
-               String[] array = str2.split("-");
+               String[] array = str2.split("-", 2);
                value.put(array[1], newArgs[1]);
                break;
            }
         }
     }
 
-    private void validation(String[] args) {
-        if (args.length < 1) {
-            throw new IllegalArgumentException();
-        }
-        for (String str : args) {
-            if (!str.contains("=")) {
-                throw new IllegalArgumentException();
+    private void validation(String line) {
+            if (!line.contains("=")) {
+                throw new IllegalArgumentException("Нарушен шаблон : (-ключ=значение), отсутствует символ (=)");
             }
-            String[] array = str.split("=", 2);
+            String[] array = line.split("=", 2);
             for (String st : array) {
                 if (array[0].length() < 2 || array[1].length() < 1) {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("Отсутствует ключ или значение.");
                 }
                 if (!st.startsWith("-")) {
-                    throw new IllegalArgumentException();
+                    throw new IllegalArgumentException("Нарушен шаблон : (-ключ=значение), отсутствует символ (-)");
                 }
                 break;
             }
-        }
     }
 
     public static ArgsName of(String[] args) {
