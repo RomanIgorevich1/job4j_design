@@ -14,9 +14,6 @@ public class ArgsName {
     }
 
     private void parse(String[] args) {
-        if (args.length < 1) {
-            throw new IllegalArgumentException("Список аргументов пуст.");
-        }
         for (String str : args) {
             validation(str);
             String[]  newArgs = str.split("=", 2);
@@ -30,21 +27,27 @@ public class ArgsName {
 
     private void validation(String line) {
             if (!line.contains("=")) {
-                throw new IllegalArgumentException("Нарушен шаблон : (-ключ=значение), отсутствует символ (=)");
+                throw new IllegalArgumentException(String.format(
+                        "line \"%s\" should match the required pattern \"-key=value\"", line));
             }
             String[] array = line.split("=", 2);
             for (String st : array) {
                 if (array[0].length() < 2 || array[1].length() < 1) {
-                    throw new IllegalArgumentException("Отсутствует ключ или значение.");
+                    throw new IllegalArgumentException(String.format(
+                            "st \"%s\" should match the required pattern \"-key=value\", missing key or value ", st));
                 }
                 if (!st.startsWith("-")) {
-                    throw new IllegalArgumentException("Нарушен шаблон : (-ключ=значение), отсутствует символ (-)");
+                    throw new IllegalArgumentException(String.format("st \"%s\" should start with \"-\" symbol", st));
+
                 }
                 break;
             }
     }
 
     public static ArgsName of(String[] args) {
+        if (args.length < 1) {
+            throw new IllegalArgumentException("Список аргументов пуст.");
+        }
         ArgsName name = new ArgsName();
         name.parse(args);
         return name;
