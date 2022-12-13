@@ -8,7 +8,7 @@ public class ArgsName {
 
     public String get(String key) {
         if (!value.containsKey(key)) {
-            throw new IllegalArgumentException("Данного ключа не существует.");
+            throw new IllegalArgumentException(String.format("key \"%s\" does not exist", key));
         }
         return value.get(key);
     }
@@ -46,7 +46,7 @@ public class ArgsName {
 
     public static ArgsName of(String[] args) {
         if (args.length < 1) {
-            throw new IllegalArgumentException("Список аргументов пуст.");
+            throw new IllegalArgumentException("Argument list is empty");
         }
         ArgsName name = new ArgsName();
         name.parse(args);
