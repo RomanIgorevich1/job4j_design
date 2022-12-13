@@ -33,9 +33,11 @@ public class Zip {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         ArgsName.of(args);
         Zip zip = new Zip();
+        Path path = Path.of("C:\\projects\\job4j_design");
+        zip.packFiles(Search.search(path, value -> !value.toFile().getName().contains("*.java")), new File("project.zip"));
         zip.packSingleFile(
                 new File("./pom.xml"),
                 new File("./pom.zip")
