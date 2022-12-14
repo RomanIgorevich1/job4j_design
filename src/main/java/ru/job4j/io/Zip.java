@@ -33,11 +33,34 @@ public class Zip {
         }
     }
 
+    private String[] validation(String[] args) {
+        if (args.length < 2) {
+            throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER.");
+        }
+        int point = 0;
+        String[] array = new String[args.length];
+        for (String str : args) {
+            String[] newArgs = str.split("=", 2);
+            array[point++] = newArgs[1];
+        }
+        File path = new File(array[0]);
+        if (args[0].length() < 1) {
+            throw new IllegalArgumentException("Parameter length must be greater than 1.");
+        }
+        if (!path.exists() && !path.isDirectory()) {
+            throw new IllegalArgumentException("This path does not exist.");
+        }
+        if (!array[1].startsWith("*")) {
+            throw new IllegalArgumentException("Extension must start with a dot.");
+        }
+        return array;
+    }
+
     public static void main(String[] args) throws IOException {
-        ArgsName.of(args);
         Zip zip = new Zip();
-        Path path = Path.of("C:\\projects\\job4j_design");
-        zip.packFiles(Search.search(path, value -> !value.toFile().getName().contains("*.java")), new File("project.zip"));
+        String[] array = zip.validation(args);
+        Path path = Path.of(array[0]);
+        zip.packFiles(Search.search(path, value -> !value.toFile().getName().contains(array[1])), new File("project.zip"));
         zip.packSingleFile(
                 new File("./pom.xml"),
                 new File("./pom.zip")
