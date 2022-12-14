@@ -33,34 +33,28 @@ public class Zip {
         }
     }
 
-    private String[] validation(String[] args) {
-        if (args.length < 2) {
+    private void validation(Path path, File extension, String[] args) {
+        if (args.length != 3) {
             throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER.");
         }
-        int point = 0;
-        String[] array = new String[args.length];
-        for (String str : args) {
-            String[] newArgs = str.split("=", 2);
-            array[point++] = newArgs[1];
-        }
-        File path = new File(array[0]);
-        if (args[0].length() < 1) {
+        if (path.toString().length() < 1) {
             throw new IllegalArgumentException("Parameter length must be greater than 1.");
         }
-        if (!path.exists() && !path.isDirectory()) {
+        if (!path.toFile().exists() && !path.toFile().isDirectory()) {
             throw new IllegalArgumentException("This path does not exist.");
         }
-        if (!array[1].startsWith("*")) {
+        if (!extension.getName().startsWith("*")) {
             throw new IllegalArgumentException("Extension must start with a dot.");
         }
-        return array;
     }
 
     public static void main(String[] args) throws IOException {
         Zip zip = new Zip();
-        String[] array = zip.validation(args);
-        Path path = Path.of(array[0]);
-        zip.packFiles(Search.search(path, value -> !value.toFile().getName().contains(array[1])), new File("project.zip"));
+        Path path = Path.of(ArgsName.of(args).get("d"));
+        File extension = new File(ArgsName.of(args).get("e"));
+        File archive = new File(ArgsName.of(args).get("o"));
+        zip.validation(path, extension, args);
+        zip.packFiles(Search.search(path, value -> !value.toFile().getName().contains(extension.getName())), new File(archive.getName()));
         zip.packSingleFile(
                 new File("./pom.xml"),
                 new File("./pom.zip")
