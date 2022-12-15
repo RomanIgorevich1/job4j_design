@@ -33,27 +33,25 @@ public class Zip {
         }
     }
 
-    private void validation(Path path, File extension, String[] args) {
-        if (args.length != 3) {
-            throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER.");
-        }
-        if (path.toString().length() < 1) {
+    private void validation(ArgsName argsName) {
+        Path path = Path.of(argsName.get("d"));
+        if (argsName.get("d").length() < 1 && argsName.get("e").length() < 1 && argsName.get("o").length() < 1) {
             throw new IllegalArgumentException("Parameter length must be greater than 1.");
         }
         if (!path.toFile().exists() && !path.toFile().isDirectory()) {
             throw new IllegalArgumentException("This path does not exist.");
         }
-        if (!extension.getName().startsWith("*")) {
-            throw new IllegalArgumentException("Extension must start with a dot.");
+        if (!argsName.get("e").startsWith("*")) {
+            throw new IllegalArgumentException("Extension must start with a star.");
         }
     }
 
     public static void main(String[] args) throws IOException {
         Zip zip = new Zip();
+        zip.validation(ArgsName.of(args));
         Path path = Path.of(ArgsName.of(args).get("d"));
         File extension = new File(ArgsName.of(args).get("e"));
         File archive = new File(ArgsName.of(args).get("o"));
-        zip.validation(path, extension, args);
         zip.packFiles(Search.search(path, value -> !value.toFile().getName().contains(extension.getName())), new File(archive.getName()));
         zip.packSingleFile(
                 new File("./pom.xml"),
