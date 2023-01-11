@@ -47,11 +47,15 @@ public class Zip {
     }
 
     public static void main(String[] args) throws IOException {
+        if (args.length != 3) {
+            throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER.");
+        }
         Zip zip = new Zip();
-        zip.validation(ArgsName.of(args));
-        Path path = Path.of(ArgsName.of(args).get("d"));
-        File extension = new File(ArgsName.of(args).get("e"));
-        File archive = new File(ArgsName.of(args).get("o"));
+        ArgsName argsName = ArgsName.of(args);
+        zip.validation(argsName);
+        Path path = Path.of(argsName.get("d"));
+        File extension = new File(argsName.get("e"));
+        File archive = new File(argsName.get("o"));
         zip.packFiles(Search.search(path, value -> !value.toFile().getName().contains(extension.getName())), new File(archive.getName()));
         zip.packSingleFile(
                 new File("./pom.xml"),
