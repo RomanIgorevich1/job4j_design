@@ -83,7 +83,6 @@ public class ConsoleChat {
 
     public static void main(String[] args) {
         ConsoleChat consoleChat = new ConsoleChat("./data/Dialog.txt", "./data/BotAnswers.txt");
-        //System.out.println(consoleChat.readPhrases());
         consoleChat.run();
     }
 }
