@@ -17,53 +17,47 @@ public class ConsoleChat {
     }
 
     public void run() {
-        try (BufferedReader reader = new BufferedReader(new FileReader("./data/UserQuestions.txt"))) {
-            String str;
-            boolean command = true;
-            List<String> dialog = new ArrayList<>();
-            while ((str = reader.readLine()) != null) {
-                if (str.equals(STOP)) {
-                    dialog.add(str);
-                    command = false;
-                    continue;
-                }
-                if (str.equals(CONTINUE)) {
-                    dialog.add(str);
-                    command = true;
-                }
-                if (str.equals(OUT)) {
-                    dialog.add(str);
+        List<String> botAnswer = new ArrayList<>(readPhrases());
+        List<String> dialog = new ArrayList<>();
+        boolean command = true;
+        int point = 0;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+            while (!(point == 10)) {
+                String word = reader.readLine();
+                if ("Закончить".equals(word)) {
+                    dialog.add(word);
                     break;
                 }
-                if (command) {
-                    for (String answer : readPhrases()) {
-                        if (dialog.contains(answer)) {
-                            continue;
-                        } else {
-                            if (!dialog.contains(str)) {
-                                dialog.add(str);
-                            }
-                            dialog.add(answer);
-                            break;
-                        }
-                    }
+                if ("Стоп".equals(word)) {
+                    dialog.add(word);
+                    command = false;
                 }
-                if (!dialog.contains(str)) {
-                    dialog.add(str);
+                if ("Продолжить".equals(word)) {
+                    command = true;
+                }
+                if (command) {
+                    dialog.add(word);
+                    dialog.add(botAnswer.get(point));
+                    System.out.println(botAnswer.get(point));
+                    point++;
+                }
+                if (!dialog.contains(word)) {
+                    dialog.add(word);
                 }
             }
-            saveLog(dialog);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
+        saveLog(dialog);
     }
 
     private List<String> readPhrases() {
         List<String> text = new ArrayList<>();
-        try (BufferedReader bufferedReaderBot = new BufferedReader(new FileReader("./data/BotAnswers.txt"))) {
-            String str2;
-            while ((str2 = bufferedReaderBot.readLine()) != null) {
-                text.add(str2);
+        try (BufferedReader bufferedReaderBot = new BufferedReader(new FileReader(botAnswer))) {
+            String str;
+            while ((str = bufferedReaderBot.readLine()) != null) {
+                text.add(str);
             }
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -72,7 +66,7 @@ public class ConsoleChat {
     }
 
     private void saveLog(List<String> log) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./data/Dialog.txt"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path))) {
             for (String text : log) {
                 writer.write(text + System.lineSeparator());
             }
