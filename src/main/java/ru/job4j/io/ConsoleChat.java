@@ -3,6 +3,7 @@ package ru.job4j.io;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ConsoleChat {
     private static final String OUT = "Закончить";
@@ -19,33 +20,31 @@ public class ConsoleChat {
     public void run() {
         List<String> botAnswer = new ArrayList<>(readPhrases());
         List<String> dialog = new ArrayList<>();
+        Random random = new Random();
         boolean command = true;
-        int point = 0;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
-            while (!(point == 10)) {
+            while (!dialog.contains(OUT)) {
                 String word = reader.readLine();
-                if ("Закончить".equals(word)) {
+                if (OUT.equals(word)) {
                     dialog.add(word);
                     break;
                 }
-                if ("Стоп".equals(word)) {
+                if (STOP.equals(word)) {
                     dialog.add(word);
                     command = false;
                 }
-                if ("Продолжить".equals(word)) {
+                if (CONTINUE.equals(word)) {
                     command = true;
                 }
                 if (command) {
                     dialog.add(word);
-                    dialog.add(botAnswer.get(point));
-                    System.out.println(botAnswer.get(point));
-                    point++;
+                    dialog.add(botAnswer.get(random.nextInt(botAnswer.size())));
+                    System.out.println(botAnswer.get(random.nextInt(botAnswer.size())));
                 }
                 if (!dialog.contains(word)) {
                     dialog.add(word);
                 }
             }
-
         } catch (IOException exception) {
             exception.printStackTrace();
         }
