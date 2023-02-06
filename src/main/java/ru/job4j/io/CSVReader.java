@@ -7,9 +7,7 @@ public class CSVReader {
     public static void handle(ArgsName argsName) {
        try (PrintWriter printOut = new PrintWriter(new FileOutputStream(argsName.get("out")));
             var scanner = new Scanner(new FileInputStream(argsName.get("path")))) {
-           String[] arguments = {argsName.get("path"), argsName.get("delimiter"),
-                   argsName.get("out"), argsName.get("filter")};
-           validation(arguments);
+           validation(argsName);
            List<Integer> index = new ArrayList<>();
            int indexSize = 0;
            String[] filters = argsName.get("filter").split(",");
@@ -49,9 +47,10 @@ public class CSVReader {
        }
     }
 
-    private static void validation(String[] args) {
-        File path = new File(args[0]);
-        File out = new File(args[2]);
+    private static void validation(ArgsName argsName) {
+        File path = new File(argsName.get("path"));
+        File out = new File(argsName.get("out"));
+        String delimiter = argsName.get("delimiter");
         if (!path.exists() && !path.isDirectory()) {
             throw new IllegalArgumentException("This path does not exist.");
         }
@@ -67,7 +66,7 @@ public class CSVReader {
         if (path.length() < 1) {
             throw new IllegalArgumentException("Parameter length must be greater 1.");
         }
-        if (args[1].length() > 1 || (!args[1].startsWith(",") && !args[1].startsWith(";"))) {
+        if (delimiter.length() > 1 || (!delimiter.startsWith(",") && !delimiter.startsWith(";"))) {
             throw new IllegalArgumentException("Not allowed csv format.");
         }
     }
