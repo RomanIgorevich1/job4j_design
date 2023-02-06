@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class CSVReader {
-    public static void handle(ArgsName argsName) throws Exception {
+    public static void handle(ArgsName argsName) {
        try (PrintWriter printOut = new PrintWriter(new FileOutputStream(argsName.get("out")));
             var scanner = new Scanner(new FileInputStream(argsName.get("path")))) {
            String[] arguments = {argsName.get("path"), argsName.get("delimiter"),
@@ -23,6 +23,16 @@ public class CSVReader {
                    }
                }
                for (Integer number : index) {
+                   if (argsName.get("out").equals("stdout")) {
+                       if (indexSize != index.size() - 1) {
+                           System.out.printf("%s", array[number] + argsName.get("delimiter"));
+                           indexSize++;
+                       } else {
+                           System.out.printf("%s", array[number]);
+                           indexSize = 0;
+                       }
+                       continue;
+                   }
                    if (indexSize != index.size() - 1) {
                        printOut.printf("%s", array[number] + argsName.get("delimiter"));
                        indexSize++;
@@ -32,20 +42,40 @@ public class CSVReader {
                    }
                }
                printOut.printf("%n");
+               System.out.printf("%n");
            }
+       } catch (IOException exception) {
+           exception.printStackTrace();
        }
     }
 
     private static void validation(String[] args) {
-        if (args.length != 4) {
-            throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER.");
-        }
         File path = new File(args[0]);
+        File out = new File(args[2]);
         if (!path.exists() && !path.isDirectory()) {
             throw new IllegalArgumentException("This path does not exist.");
         }
-        if (path.length() < 1 || (args[3].length() < 1 || args[2].length() < 1)) {
+        if (!out.exists()) {
+            throw new IllegalArgumentException("This path does not exist.");
+        }
+        if (!path.getName().contains(".csv")) {
+            throw new IllegalArgumentException("Not valid extension.");
+        }
+        if (out.getName().equals("out") && !out.getName().contains(".csv")) {
+            throw new IllegalArgumentException("Not valid extension.");
+        }
+        if (path.length() < 1) {
             throw new IllegalArgumentException("Parameter length must be greater 1.");
         }
+        if (args[1].length() > 1 || (!args[1].startsWith(",") && !args[1].startsWith(";"))) {
+            throw new IllegalArgumentException("Not allowed csv format.");
+        }
+    }
+
+    public static void main(String[] args) {
+        if (args.length != 4) {
+            throw new IllegalArgumentException("Root is null. Usage ROOT_FOLDER.");
+        }
+        handle(ArgsName.of(args));
     }
 }
