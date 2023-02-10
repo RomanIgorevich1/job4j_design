@@ -4,7 +4,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
-
 public class CarJson {
     public static void main(String[] args) {
         /*
@@ -35,5 +34,4 @@ public class CarJson {
          */
         System.out.println(new JSONObject(myCar));
     }
-
 }

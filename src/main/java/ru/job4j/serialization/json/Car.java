@@ -1,7 +1,6 @@
 package ru.job4j.serialization.json;
 
 import java.util.Arrays;
-
 public class Car {
     private boolean type;
     private int year;
