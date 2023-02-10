@@ -19,7 +19,7 @@ public class CarJson {
         list.add("2.5");
         JSONArray jsonDescription = new JSONArray(list);
         final Car myCar = new Car(true, 2019,
-                new CreatingCar("Mazda"), new String[] {"Car Model", "Color", "Engine"});
+                new CreatingCar("Mazda"), "CX-5", "Black", "2.5");
         /*
            JSONObject напрямую методом put
          */

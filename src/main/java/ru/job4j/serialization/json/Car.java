@@ -7,7 +7,7 @@ public class Car {
     private CreatingCar creatingCar;
     private String[] descriptions;
 
-    public Car(boolean type, int year, CreatingCar creatingCar, String[] descriptions) {
+    public Car(boolean type, int year, CreatingCar creatingCar, String... descriptions) {
         this.type = type;
         this.year = year;
         this.creatingCar = creatingCar;
