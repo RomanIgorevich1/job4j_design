@@ -34,12 +34,12 @@ public class Find extends SimpleFileVisitor<Path> {
             String type = argsName.get("t");
             String name = argsName.get("n");
             if (type.equals("mask")) {
-                if (file.getName().matches(".*$" + name)) {
-                writer.write(file.getName() + "\n");
+                if (file.getName().endsWith(name)) {
+                    writer.write(file.getName() + "\n");
                 }
             }
             if (type.equals("name")) {
-                if (file.getName().matches("^" + name + ".(text|txt)")) {
+                if (file.getName().equals(name)) {
                     writer.write(file.getName() + "\n");
                 }
             }
@@ -56,16 +56,12 @@ public class Find extends SimpleFileVisitor<Path> {
 
     private void validation(ArgsName argsName) {
         Path path = Path.of(argsName.get("d"));
-        if (argsName.get("d").length() < 1 && argsName.get("n").length() < 1
-                && argsName.get("t").length() < 1 && argsName.get("o").length() < 1) {
-            throw new IllegalArgumentException("Parameter length must be greater than 1.");
-        }
         if (!path.toFile().exists() && !path.toFile().isDirectory()) {
             throw new IllegalArgumentException("This path does not exist.");
         }
-         if ((!argsName.get("t").contains("name") || !argsName.get("t").contains("mask"))
-                 || !argsName.get("t").contains("regex")) {
-         throw new IllegalArgumentException("Search type should be name or mask or regex.");
-         }
+        if (!argsName.get("t").equals("regex") && !argsName.get("t").equals("name")
+                && !argsName.get("t").equals("mask")) {
+            throw new IllegalArgumentException("Search type should be name or mask or regex.");
+        }
     }
 }
