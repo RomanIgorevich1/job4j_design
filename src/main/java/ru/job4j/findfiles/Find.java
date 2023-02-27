@@ -33,19 +33,25 @@ public class Find extends SimpleFileVisitor<Path> {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("log.txt", true))) {
             String type = argsName.get("t");
             String name = argsName.get("n");
+
+            String line = System.lineSeparator();
+            String mask = name
+                    .replace(".", "[.]")
+                    .replace("*", ".*")
+                    .replace("?", ".{1}");
             if (type.equals("mask")) {
-                if (file.getName().endsWith(name)) {
-                    writer.write(file.getName() + "\n");
+                if (file.getName().matches(mask)) {
+                    writer.write(file.getAbsolutePath() + line);
                 }
             }
             if (type.equals("name")) {
                 if (file.getName().equals(name)) {
-                    writer.write(file.getName() + "\n");
+                    writer.write(file.getAbsolutePath() + line);
                 }
             }
             if (type.equals("regex")) {
                 if (file.getName().matches(name)) {
-                    writer.write(file.getName() + "\n");
+                    writer.write(file.getAbsolutePath() + line);
                 }
             }
         } catch (IOException exception) {
