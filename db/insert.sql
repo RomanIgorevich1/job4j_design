@@ -1,0 +1,15 @@
+insert into users(name) values ('Roman');
+insert into users(name) values ('Igor');
+insert into users(name) values ('Svetlana');
+insert into role(name) values ('Гамлет');
+insert into rules(name) values ('Rule1');
+insert into rules(name) values ('Rule2');
+insert into item(name) values ('Item1');
+insert into comments(name) values ('Comment1');
+insert into comments(name) values ('Comment2');
+insert into attachs(name) values ('Attach1');
+insert into attachs(name) values ('Attach2');
+insert into category(name) values ('Category1');
+insert into category(name) values ('Category2');
+insert into state(name) values ('State1');
+insert into state(name) values ('State2');

@@ -1,8 +1,43 @@
-create table books (
+create table users  (
 	id serial primary key,
 	name text,
-	year int,
-	read boolean
+	role_id int references role(id),
+	item_id int references item(id)
 );
-insert into books (name, year, read) values('The Call of Cthulhu', 1926, true);
-select * from books;
+create table role (
+	id serial primary key,
+	name text
+);
+create table rules (
+	id serial primary key,
+	name text
+);
+create table role_rules (
+	id serial primary key,
+	role_id int references role(id),
+	rules_id int references rules(id)
+);
+create table items (
+    id serial primary key,
+	name text
+);
+create table comments (
+	id serial primary key,
+	name text,
+	item_id int references item(id)
+);
+create table attachs (
+	id serial primary key,
+	name text,
+	item_id int references item(id)
+);
+create table state (
+	id serial primary key,
+	name text,
+	item_id int references item(id)
+);
+create table category (
+	id serial primary key,
+	name text,
+	item_id int references item(id)
+)
