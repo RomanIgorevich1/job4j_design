@@ -61,7 +61,7 @@ return result;
 end;
 $$;
 
-create or replace procedure prod_delete_data(p_count integer, p_id integer)
+create or replace procedure prod_delete_data(p_count integer)
 language 'plpgsql'
 as $$
 begin
@@ -71,7 +71,7 @@ end if;
 end;
 $$;
 
-create or replace function func_delete_data(f_count integer, f_id integer)
+create or replace function func_delete_data(f_count integer)
 returns integer
 language 'plpgsql'
 as $$
