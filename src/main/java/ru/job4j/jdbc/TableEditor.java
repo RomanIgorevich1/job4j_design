@@ -9,13 +9,20 @@ public class TableEditor implements AutoCloseable {
     private Connection connection;
     private Properties properties;
 
-    public TableEditor(Properties properties) {
+    public TableEditor(Properties properties) throws Exception {
         this.properties = properties;
         initConnection();
     }
 
-    private void initConnection() {
-        connection = null;
+    private void initConnection()  throws Exception {
+        try (InputStream inputStream = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+            properties.load(inputStream);
+        }
+        Class.forName(properties.getProperty("driver_jdbc"));
+        String url = properties.getProperty("url");
+        String login = properties.getProperty("login");
+        String password = properties.getProperty("password");
+        connection = DriverManager.getConnection(url, login, password);
     }
 
     public void createTable(String tableName) throws Exception {
@@ -75,19 +82,7 @@ public class TableEditor implements AutoCloseable {
     }
 
     private Statement getStatement() throws Exception {
-        return getConnection().createStatement();
-    }
-
-    private Connection getConnection() throws Exception {
-        try (InputStream inputStream = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
-            properties.load(inputStream);
-        }
-        Class.forName(properties.getProperty("driver_jdbc"));
-        String url = properties.getProperty("url");
-        String login = properties.getProperty("login");
-        String password = properties.getProperty("password");
-        connection = DriverManager.getConnection(url, login, password);
-        return connection;
+        return connection.createStatement();
     }
 
     @Override
@@ -100,7 +95,6 @@ public class TableEditor implements AutoCloseable {
     public static void main(String[] args) throws Exception {
         try (TableEditor table = new TableEditor(new Properties())
         ) {
-            table.getConnection();
             table.createTable("students");
             System.out.println(table.getTableScheme("students"));
             table.addColumn("students", "age", "text");
