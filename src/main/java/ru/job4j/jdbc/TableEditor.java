@@ -15,7 +15,7 @@ public class TableEditor implements AutoCloseable {
     }
 
     private void initConnection()  throws Exception {
-        try (InputStream inputStream = TableEditor.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream inputStream = TableEditor.class.getClassLoader().getResourceAsStream("table.properties")) {
             properties.load(inputStream);
         }
         Class.forName(properties.getProperty("driver_jdbc"));
@@ -99,7 +99,7 @@ public class TableEditor implements AutoCloseable {
             System.out.println(table.getTableScheme("students"));
             table.addColumn("students", "age", "text");
             System.out.println(table.getTableScheme("students"));
-            table.addColumn("students", "sex", "integer");
+            table.addColumn("students", "sex", "text");
             System.out.println(table.getTableScheme("students"));
             table.addColumn("students", "address", "varchar");
             table.dropColumn("students", "age");
