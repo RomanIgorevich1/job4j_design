@@ -4,14 +4,6 @@ import java.io.File;
 import java.lang.ref.SoftReference;
 import java.util.Scanner;
 
-/**
- * Создать в папке cache/menu класс Emulator для работы с пользователем. Предоставить пользователю возможности:
- * - указать кэшируемую директорию
- * - загрузить содержимое файла в кэш
- * - получить содержимое файла из кэша
- * в меню используйте только get()
- */
-
 public class Emulator {
     private String menu = """
             1. Указать кэшируемую директорию
