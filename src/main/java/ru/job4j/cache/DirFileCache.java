@@ -13,7 +13,7 @@ public class DirFileCache extends AbstractCache<String, String> {
 
     @Override
     protected String load(String key) {
-        String result = "";
+        String result;
         try (BufferedReader reader = new BufferedReader(new FileReader(key))) {
                 result = reader.readLine();
         } catch (IOException e) {
