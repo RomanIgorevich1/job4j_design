@@ -41,5 +41,4 @@ class ReportAccountingDepartmentTest {
                         .append(System.lineSeparator()));
         assertThat(engine.generate(m -> true)).isEqualTo(text.toString());
     }
-
 }
