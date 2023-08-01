@@ -5,6 +5,8 @@ import ru.job4j.ood.srp.formatter.DateTimeParser;
 import ru.job4j.ood.srp.formatter.ReportDateTimeParser;
 import ru.job4j.ood.srp.model.Employee;
 import ru.job4j.ood.srp.store.MemStore;
+
+import javax.xml.bind.JAXBException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import static org.assertj.core.api.Assertions.*;
@@ -12,7 +14,7 @@ import static org.assertj.core.api.Assertions.*;
 class ReportDevelopmentDepartmentTest {
 
     @Test
-    public void whenGenerateCSV() {
+    public void whenGenerateCSV() throws JAXBException {
         MemStore store = new MemStore();
         Calendar hired = new GregorianCalendar(2000, Calendar.FEBRUARY, 1);
         Calendar fired = new GregorianCalendar(2015, Calendar.APRIL, 1);

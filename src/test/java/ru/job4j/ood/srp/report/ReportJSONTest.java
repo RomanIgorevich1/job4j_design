@@ -15,8 +15,6 @@ public class ReportJSONTest {
 
     @Test
     public void whenJSONGenerated() throws JAXBException {
-        String line = System.lineSeparator();
-        String tab = "\t";
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         Employee worker = new Employee("John Doe", now, now, 5000.0);

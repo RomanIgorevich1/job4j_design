@@ -5,13 +5,15 @@ import ru.job4j.ood.srp.formatter.DateTimeParser;
 import ru.job4j.ood.srp.formatter.ReportDateTimeParser;
 import ru.job4j.ood.srp.model.Employee;
 import ru.job4j.ood.srp.store.MemStore;
+
+import javax.xml.bind.JAXBException;
 import java.util.*;
 import static org.assertj.core.api.Assertions.*;
 
 public class ReportHRDepartmentTest {
 
     @Test
-    public void whenGenerateSort() {
+    public void whenGenerateSort() throws JAXBException {
         MemStore store = new MemStore();
         Calendar hired = new GregorianCalendar(2000, Calendar.FEBRUARY, 1);
         Calendar fired = new GregorianCalendar(2015, Calendar.APRIL, 1);
