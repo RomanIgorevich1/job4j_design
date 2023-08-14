@@ -9,7 +9,10 @@ public abstract class AbstractStore implements Store {
     /**
      * Реализует общую логику хранилищ
      */
-    private List<Food> foodList = new ArrayList<>();
+    protected List<Food> foodList = new ArrayList<>();
+    protected static final int PERCENT_WAREHOUSE = 75;
+    protected static final int PERCENT_SHOP = 25;
+    protected static final int PERCENT_TRASH = 0;
 
     @Override
     public Food add(Food food) {
@@ -26,21 +29,5 @@ public abstract class AbstractStore implements Store {
 
     public boolean find(Food food) {
         return foodList.contains(food);
-    }
-
-    public int getPercentWarehouse() {
-        return 75;
-    }
-
-    public int getPercentShop() {
-        return 25;
-    }
-
-    public int getPercentTrash() {
-        return 0;
-    }
-
-    public List<Food> getFoodList() {
-        return this.foodList;
     }
  }

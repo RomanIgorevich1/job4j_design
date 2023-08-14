@@ -33,6 +33,6 @@ public class ControlQualityTest {
         assertThat(shop.find(cake)).isTrue();
         assertThat(trash.find(sausage)).isTrue();
         assertThat(cake.getPrice()).isEqualTo(30);
-        assertThat(warehouse.getFoodList().size()).isEqualTo(2);
+        assertThat(warehouse.foodList.size()).isEqualTo(2);
     }
 }
