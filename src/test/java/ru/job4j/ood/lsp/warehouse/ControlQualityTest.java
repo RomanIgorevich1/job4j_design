@@ -27,10 +27,12 @@ public class ControlQualityTest {
         List<Food> foodList = List.of(milk, oil, bread, cake, sausage);
         ControlQuality controlQuality = new ControlQuality(storeList);
         controlQuality.redistribution(date, foodList);
-        assertThat(warehouse.find(oil)).isEqualTo(oil);
-        assertThat(warehouse.find(milk)).isEqualTo(milk);
-        assertThat(shop.find(bread)).isEqualTo(bread);
-        assertThat(shop.find(cake)).isEqualTo(cake);
-        assertThat(trash.find(sausage)).isEqualTo(sausage);
+        assertThat(warehouse.find(oil)).isTrue();
+        assertThat(warehouse.find(milk)).isTrue();
+        assertThat(shop.find(bread)).isTrue();
+        assertThat(shop.find(cake)).isTrue();
+        assertThat(trash.find(sausage)).isTrue();
+        assertThat(cake.getPrice()).isEqualTo(30);
+        assertThat(warehouse.getFoodList().size()).isEqualTo(2);
     }
 }

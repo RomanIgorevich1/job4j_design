@@ -1,25 +1,23 @@
 package ru.job4j.ood.lsp.warehouse;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Shop extends AbstractStore {
-    private List<Food> shop = new ArrayList<>();
 
     @Override
-    public Food find(Food food) {
-        return shop.contains(food) ? food : null;
+    public Food add(Food food) {
+        getFoodList().add(food);
+        return food;
     }
 
     @Override
-    public float use(Food food, LocalDate date) {
+    public long use(Food food, LocalDate date) {
         float result = super.use(food, date);
-        if (result > 25 && result < 75) {
-            shop.add(food);
-        } else if (result < 25 && result != 0) {
+        if (result > getPercentShop() && result < getPercentWarehouse()) {
+            add(food);
+        } else if (result < getPercentShop() && result != getPercentTrash()) {
             food.setPrice(food.getPrice() / food.getDiscount());
-            shop.add(food);
+            add(food);
         }
         return super.use(food, date);
     }

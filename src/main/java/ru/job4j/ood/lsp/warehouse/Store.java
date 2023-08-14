@@ -1,13 +1,10 @@
 package ru.job4j.ood.lsp.warehouse;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public interface Store {
-    List<Store> addStore();
 
-    float use(Food food, LocalDate date);
+    Food add(Food food);
 
-    Food find(Food food);
-
+    long use(Food food, LocalDate date);
 }
