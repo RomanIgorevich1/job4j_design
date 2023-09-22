@@ -10,5 +10,4 @@ public interface ParkingFactory {
     int getPlaceForCar();
 
     int getParkingSize();
-
 }
