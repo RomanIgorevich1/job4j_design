@@ -3,10 +3,12 @@ package ru.job4j.ood.lsp.parking;
 import java.util.List;
 
 public interface ParkingFactory {
-    void add(Transport transport);
+    boolean add(Transport transport);
 
     void parkingCar(List<Transport> transports);
 
     int getPlaceForCar();
+
+    int getParkingSize();
 
 }

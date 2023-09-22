@@ -11,6 +11,7 @@ public class Truck implements Transport {
         this.color = color;
     }
 
+    @Override
     public String getName() {
         return name;
     }
@@ -23,4 +24,4 @@ public class Truck implements Transport {
     public int getSize() {
         return TRUCK_SIZE;
     }
-}
+ }
